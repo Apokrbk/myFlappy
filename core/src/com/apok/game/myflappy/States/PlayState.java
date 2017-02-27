@@ -89,6 +89,18 @@ public class PlayState extends State {
         bird.update(dt);
         updateBackground();
         cam.position.x = bird.getPosition().x + 80;
+        updateTubes();
+        if(bird.getPosition().y <= GROUND_HEIGHT)
+        {
+            if(score > gsm.database.getFirst())
+                gsm.database.addToDatabase(score);
+            gsm.set(new MenuState(gsm));
+        }
+
+        cam.update();
+    }
+
+    private void updateTubes() {
         for(int i=0; i<tubes.size; i++)
         {
             Tube tube = tubes.get(i);
@@ -107,16 +119,7 @@ public class PlayState extends State {
                 tube.setPassed(true);
             }
         }
-        if(bird.getPosition().y <= GROUND_HEIGHT)
-        {
-            if(score > gsm.database.getFirst())
-                gsm.database.addToDatabase(score);
-            gsm.set(new MenuState(gsm));
-        }
-
-        cam.update();
     }
-
 
 
     public void updateBackground()
